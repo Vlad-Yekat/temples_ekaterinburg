@@ -3,4 +3,4 @@ from django.shortcuts import render
 
 
 def index(request):
-    return HttpResponse('<html><title>Храмы Екатеринбурга</title></html>')
+    return render(request, 'core/index.html')
