@@ -1,0 +1,7 @@
+Django==3.0.8
+flake8==3.8.3
+pylint==2.5.3
+requests==2.24.0
+selenium==3.141.0
+Unipath==1.1
+
