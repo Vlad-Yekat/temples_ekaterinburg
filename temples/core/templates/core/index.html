@@ -3,9 +3,10 @@
 {% block title %} Список всех Храмов Екатеринбурга — Храмы Екатеринбурга {% endblock title %}
 
 {% block content %}
-{% for item in object_list %}
+{% for item in main_list %}
 <div>
 <h2>{{ item.name }}</h2>
+    <p><a href="{{ item.get_absolute_url }}">Link</a></p>
 <p>{{ item.full_description }}</p>
 </div>
 {% endfor %}

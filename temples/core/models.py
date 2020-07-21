@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Country(models.Model):
@@ -60,6 +61,9 @@ class Church(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('object_detail', args=[self.slug])
 
 
 class Tag(models.Model):
