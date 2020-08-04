@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from users.models import CustomUser
 
 
 class Country(models.Model):
@@ -83,4 +84,11 @@ class Tag(models.Model):
 # class Video
 #
 #
-# class Comment
+class Comment(models.Model):
+    object_of_comment = models.ForeignKey(Church, on_delete=models.deletion.CASCADE)
+    author = models.ForeignKey(CustomUser, on_delete=models.deletion.CASCADE, null=True, blank=True)
+    anonymous = models.CharField(max_length=100, null=True, blank=True)
+    text = models.TextField()
+
+    def __str__(self):
+        return self.text

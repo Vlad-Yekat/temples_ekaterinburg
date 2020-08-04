@@ -7,4 +7,15 @@
 <p>Descr: {{ object.full_description }}</p>
 <p>Site link: {{ object.site_link }}</p>
 </div>
+    <h1>Comments:</h1>
+    <table id="id_list_table">
+        {% for comment in comments %}
+<tr><td>1: {{ comment.text }}</td></tr>
+{% endfor %}
+    </table>
+<form method="POST">
+    {% csrf_token %}
+    <input name="item_text" id="id_new_item" placeholder="Enter a comment" />
+</form>
+
 {% endblock content %}
