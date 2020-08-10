@@ -1,13 +1,15 @@
 """
 TDD functional test first
+test_goat
 """
+from django.test import LiveServerTestCase
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-class MainTest(unittest.TestCase):
+class NewClientTest(LiveServerTestCase):
 
     def setUp(self) -> None:
         self.browser = webdriver.Chrome(ChromeDriverManager().install())
@@ -17,12 +19,12 @@ class MainTest(unittest.TestCase):
         self.browser.quit()
 
     def test_start_page(self):
-        self.browser.get('http://127.0.0.1:8080')
+        self.browser.get(self.live_server_url)
 
         assert 'Храмы' in self.browser.title
 
     def test_main_list(self):
-        self.browser.get('http://127.0.0.1:8080')
+        self.browser.get(self.live_server_url)
         self.assertIn('Храмы', self.browser.title)
         main_list = self.browser.find_element_by_class_name('main_list').text
         self.assertIn('Ганина', main_list)
@@ -38,8 +40,3 @@ class MainTest(unittest.TestCase):
         result = self.browser.find_element_by_id('result_list')
         rows_result = result.find_elements_by_tag_name('tr')
         self.assertTrue(any(row.text == 'No result' for row in rows_result))
-
-
-
-if __name__ == '__main__':
-    unittest.main(warnings='ignore')
