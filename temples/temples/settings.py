@@ -12,10 +12,23 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from unipath import Path
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = Path(__file__).ancestor(3)
+
+
+def get_env_variable(var_name, fallback=None):
+    """ Get the environment variable or return exception """
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = "Missing environment variable '%s'." % var_name
+    if fallback is not None:
+        print(("%s Fallback to %s" % (error_msg, fallback)))
+        return fallback
+    raise ImproperlyConfigured(error_msg)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -78,10 +91,25 @@ AUTH_USER_MODEL = 'users.CustomUser'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'temples',
+        'HOST': 'localhost',
+        'USER': get_env_variable("USER", ""),
+        'PASSWORD': get_env_variable("PASSWORD", ""),
+        'PORT': '5432',
+        'CONN_MAX_AGE': get_env_variable("DB_CONN_MAX_AGE", 60),
+        'OPTIONS': {
+            'options': f'-c statement_timeout={get_env_variable("DB_CMD_TIMEOUT_IN_MS", 60000)}',
+        },
     }
 }
 
