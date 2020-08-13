@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.urls import reverse
 from users.models import CustomUser
 
@@ -58,7 +59,8 @@ class Church(models.Model):
     path_to_go = models.TextField()
     social_link = models.URLField()
     site_link = models.URLField()
-    main_order = models.IntegerField(null=False)
+    main_order = models.IntegerField(null=False,
+                                     validators=[MinValueValidator(0), MaxValueValidator(200)])
 
     def __str__(self):
         return self.name
@@ -68,6 +70,9 @@ class Church(models.Model):
 
 
 class Tag(models.Model):
+    class Meta:
+        verbose_name_plural = "Tags"
+
     name = models.CharField(max_length=50)
     church = models.ManyToManyField(Church)
 
