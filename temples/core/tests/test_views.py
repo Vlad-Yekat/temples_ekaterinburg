@@ -39,25 +39,40 @@ class CoreViewTests(TestCase):
         self.assertContains(response, 'Saint Sofia')
         self.assertTemplateUsed(response, 'core/object_detail.html')
 
-    def test_object_detail_can_save_a_POST_request(self):
-        request = HttpRequest()
+    # def test_object_detail_can_save_a_POST_request(self):
+    #     request = HttpRequest()
+    #
+    #     request.method = 'POST'
+    #     request.POST['comment'] = 'A comment'
+    #
+    #     response = ObjectDetailView(request)
+    #     self.assertEqual(Comment.objects.count(), 1)
+    #     new_item = Comment.objects.first()
+    #     self.assertEqual(new_item.text, 'A comment')
 
-        request.method = 'POST'
-        request.POST['comment'] = 'A comment'
 
-        response = ObjectDetailView(request)
-        self.assertEqual(Comment.objects.count(), 1)
-        new_item = Comment.objects.first()
-        self.assertEqual(new_item.text, 'A comment')
+    # def test_home_page_redirects_after_POST(self):
+    #     request = HttpRequest()
+    #
+    #     request.method = 'POST'
+    #     request.POST['comment'] = 'A comment'
+    #     response = ObjectDetailView(request)
+    #     self.assertEqual(response.status_code, 302)
+    #     self.assertEqual(response['location'], '/')
 
-    def test_home_page_redirects_after_POST(self):
-        request = HttpRequest()
 
-        request.method = 'POST'
-        request.POST['comment'] = 'A comment'
-        response = ObjectDetailView(request)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], '/')
+# class ObjectDetailViewTest(TestCase):
+#     def test_displays_object_detail(self):
+#         Church.objects.create(
+#             name='Saint Sofia',
+#             slug='saint_sofia',
+#             social_link='www.ty',
+#             main_order=0,
+#         )
+#
+#         response = self.client.get('/saint_sofia/')
+#         self.assertContains(response, 'Saint')
+
 
 
 

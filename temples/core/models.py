@@ -1,7 +1,9 @@
+from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.urls import reverse
 from users.models import CustomUser
+from .choices import SEASONS, ALL_SEASONS
 
 
 class Country(models.Model):
@@ -80,10 +82,25 @@ class Tag(models.Model):
         return self.name
 
 
-# class Image(models.Model): future
-#
-#
-# class Audio
+class Image(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100)
+    church = models.ForeignKey(Church, on_delete=models.deletion.CASCADE)
+    is_in_list = models.BooleanField(default=False)
+    season = models.CharField(
+        max_length=100,
+        choices=SEASONS,
+        default=ALL_SEASONS,
+        verbose_name=_('Season when this photo is created'),
+        null=True
+    )
+    tip_text = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+# class Audio future
 #
 #
 # class Video

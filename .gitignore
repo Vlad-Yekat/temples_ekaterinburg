@@ -128,5 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# LOcal database
+# Local database
 db.sqlite3
+
+# static file
+static/
