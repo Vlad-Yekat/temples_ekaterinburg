@@ -100,7 +100,8 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'temples',
         'HOST': 'localhost',
         'USER': get_env_variable("USER", ""),
@@ -155,3 +156,26 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     "/home/vlad/my_projects/hramy/temples_ekaterinburg/temples/static",
 ]
+
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'level': get_env_variable('FILE_LOG_LEVEL', 'ERROR'),
+            'class': 'logging.handlers.RotatingFileHandler',
+            'maxBytes': 10485760,
+            'backupCount': 10,
+            'filename': "%s/temples.log" % get_env_variable("LOG_FILE_DIR", os.path.expanduser("~")),
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'file'],
+        },
+    },
+}
