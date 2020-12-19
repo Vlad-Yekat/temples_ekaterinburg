@@ -8,7 +8,8 @@ from .models import Church, City, Country, Address, Tag, District, Street, Comme
 
 class CustomChurch(admin.ModelAdmin):
     list_display = ("main_order", "name", "slug", "short_description")
-    search_fields = ("short_description__contains", "name__contains", "slug__contains", )
+    search_fields = ("short_description__contains",
+                     "name__contains", "slug__contains", )
 
 
 admin.site.register(Church, CustomChurch)
@@ -93,3 +94,32 @@ class CustomTag(admin.ModelAdmin):
 
 admin.site.register(Tag, CustomTag)
 admin.site.register(Comment)
+
+
+# def update_premiere(book):
+#     """Pretend to update the book to be a premiere.
+#
+#     This function is to make the demo clear.
+#     In a real application, this could be a manager method instead
+#     which would update the book and trigger the email notifications
+#     (e.g., `Book.objects.update_premiere(book)`).
+#     """
+#     print(f"Update {book.title} state to change premiere books.")
+#     print("Call some background task to notify interested users via email.")
+
+# @admin.register(Book)
+# class BookAdmin(admin.ModelAdmin):
+#     actions = ["set_premiere"]
+#     date_hierarchy = "published_date"
+#     inlines = [ReviewInline]
+#     list_display = ("id", "title")
+#     list_filter = ("category",)
+#     ordering = ("title",)
+#     raw_id_fields = ("editor",)
+#     prepopulated_fields = {"slug": ("title",)}
+#     search_fields = ("author",)
+#
+#     def set_premiere(self, request, queryset):
+#         if len(queryset) == 1:
+#             book = queryset[0]
+#             update_premiere(book)

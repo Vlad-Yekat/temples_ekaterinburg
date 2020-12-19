@@ -41,10 +41,18 @@ class Street(models.Model):
 class Address(models.Model):
     address_str = models.CharField(max_length=250)
     slug = models.CharField(max_length=250, null=True)
-    country = models.ForeignKey(Country, on_delete=models.deletion.SET_NULL, null=True)
-    city = models.ForeignKey(City, on_delete=models.deletion.SET_NULL, null=True)
-    district = models.ForeignKey(District, on_delete=models.deletion.SET_NULL, null=True)
-    street = models.ForeignKey(Street, on_delete=models.deletion.SET_NULL, null=True)
+    country = models.ForeignKey(Country,
+                                on_delete=models.deletion.SET_NULL,
+                                null=True)
+    city = models.ForeignKey(City,
+                             on_delete=models.deletion.SET_NULL,
+                             null=True)
+    district = models.ForeignKey(District,
+                                 on_delete=models.deletion.SET_NULL,
+                                 null=True)
+    street = models.ForeignKey(Street,
+                               on_delete=models.deletion.SET_NULL,
+                               null=True)
     house = models.CharField(max_length=20, null=True)
     note = models.TextField(null=True)
 
@@ -53,22 +61,41 @@ class Address(models.Model):
 
 
 class Church(models.Model):
+
+    class PublishedObjects(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(status='published')
+
+    options = (
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+    )
     name = models.CharField(max_length=500, null=False)
     slug = models.CharField(max_length=100)
     short_description = models.TextField()
     full_description = models.TextField()
-    address = models.ForeignKey(Address, on_delete=models.deletion.SET_NULL, null=True)
+    address = models.ForeignKey(Address,
+                                on_delete=models.deletion.SET_NULL,
+                                null=True)
     path_to_go = models.TextField()
     social_link = models.URLField()
     site_link = models.URLField()
     main_order = models.IntegerField(null=False,
-                                     validators=[MinValueValidator(0), MaxValueValidator(200)])
+                                     validators=[MinValueValidator(0),
+                                                 MaxValueValidator(200)]
+                                     )
+    status = models.CharField(max_length=9, choices=options, default='draft')
+    objects = models.Manager()
+    published_objects = PublishedObjects()
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('object_detail', args=[self.slug])
+
+    class Meta:
+        ordering = ('main_order',)
 
 
 class Tag(models.Model):
@@ -107,8 +134,12 @@ class Image(models.Model):
 #
 #
 class Comment(models.Model):
-    object_of_comment = models.ForeignKey(Church, on_delete=models.deletion.CASCADE)
-    author = models.ForeignKey(CustomUser, on_delete=models.deletion.CASCADE, null=True, blank=True)
+    object_of_comment = models.ForeignKey(Church,
+                                          on_delete=models.deletion.CASCADE)
+    author = models.ForeignKey(CustomUser,
+                               on_delete=models.deletion.CASCADE,
+                               null=True,
+                               blank=True)
     anonymous = models.CharField(max_length=100, null=True, blank=True)
     text = models.TextField()
 
