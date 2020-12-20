@@ -1,10 +1,14 @@
-from django.shortcuts import render
+from rest_framework import generics
+from core.models import City
+from .serializers import CitySerializer
 
 
 # Create your views here.
-class CityListView:
-    pass
+class CityListView(generics.ListCreateAPIView):
+    queryset = City.objects.all()
+    serializer_class = CitySerializer
 
 
-class CityDetailView:
-    pass
+class CityDetailView(generics.RetrieveDestroyAPIView):
+    queryset = City.objects.all()
+    serializer_class = CitySerializer
