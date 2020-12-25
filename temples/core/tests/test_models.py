@@ -30,3 +30,4 @@ class CityModelTest(TestCase):
         self.assertNotEqual(saved_items.count(), 0)
         first_saved_item = saved_items[0]
         self.assertEqual(first_saved_item.name, 'Berlin')
+        self.assertEqual(str(first_item), 'Berlin')
