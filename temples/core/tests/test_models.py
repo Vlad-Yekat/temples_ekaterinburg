@@ -17,6 +17,7 @@ class CountryModelTest(TestCase):
         second_saved_item = saved_items[1]
         self.assertEqual(first_saved_item.name, 'Cyprus')
         self.assertEqual(second_saved_item.name, 'Greece')
+        self.assertEqual(str(first_item), 'Cyprus')
 
 
 class CityModelTest(TestCase):

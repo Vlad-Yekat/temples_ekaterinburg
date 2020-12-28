@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.models import City
+from core.models import City, Country
 
 
 class CitySerializer(serializers.ModelSerializer):
@@ -8,4 +8,8 @@ class CitySerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = ('id', 'name')
 

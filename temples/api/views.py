@@ -1,9 +1,8 @@
 from rest_framework import generics
-from core.models import City
-from .serializers import CitySerializer
+from core.models import City, Country
+from .serializers import CitySerializer, CountrySerializer
 
 
-# Create your views here.
 class CityListView(generics.ListCreateAPIView):
     queryset = City.objects.all()
     serializer_class = CitySerializer
@@ -12,3 +11,8 @@ class CityListView(generics.ListCreateAPIView):
 class CityDetailView(generics.RetrieveDestroyAPIView):
     queryset = City.objects.all()
     serializer_class = CitySerializer
+
+
+class CountryListView(generics.ListCreateAPIView):
+    queryset = Country.objects.all()
+    serializer_class = CountrySerializer
