@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.models import City, Country
+from core.models import City, Country, Church
 
 
 class CitySerializer(serializers.ModelSerializer):
@@ -13,3 +13,8 @@ class CountrySerializer(serializers.ModelSerializer):
         model = Country
         fields = ('id', 'name')
 
+
+class ChurchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Church
+        fields = '__all__'

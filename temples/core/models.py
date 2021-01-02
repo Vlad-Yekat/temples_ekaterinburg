@@ -74,6 +74,10 @@ class Church(models.Model):
     slug = models.CharField(max_length=100)
     short_description = models.TextField()
     full_description = models.TextField()
+    author = models.ForeignKey(CustomUser,
+                               on_delete=models.deletion.CASCADE,
+                               null=True,
+                               blank=True)
     address = models.ForeignKey(Address,
                                 on_delete=models.deletion.SET_NULL,
                                 null=True)

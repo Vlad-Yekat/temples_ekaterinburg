@@ -42,6 +42,8 @@ urlpatterns = [
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
+
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/', include('api.urls', namespace='api')),
     path('', include('core.urls'))
 ]
